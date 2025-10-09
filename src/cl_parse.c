@@ -3143,6 +3143,7 @@ void CL_ParsePrint (void)
 
 void CL_ParseStufftext (void) 
 {
+	extern cvar_t r_dischargelight;
 	char *s = MSG_ReadString();
 
 	// Always process demomarks, regardless of who inserted them
@@ -3195,6 +3196,12 @@ void CL_ParseStufftext (void)
 			if (cl.standby && !CL_Demo_SkipMessage(true)) {
 				// Ignore if not the tracked player
 				CL_ReadKtxDamageIndicatorString(s + 2);
+			}
+		}
+		else if (!strncmp(s, "//ktx discharge ", sizeof("//ktx discharge ") - 1)) {
+			if (r_dischargelight.value)
+			{
+				CL_ReadKtxDischargeString(s + 2);
 			}
 		}
 	}

@@ -1174,3 +1174,31 @@ qbool Draw_IsConsoleBackground(mpic_t* pic)
 {
 	return pic == &conback || pic == last_lvlshot;
 }
+
+void DrawRadius(int radius, int timeout, vec3_t origin)
+{
+	extern cvar_t r_dischargelightcolor;
+	dlight_t *dl = NULL;
+	customlight_t l = {0};
+	byte color[4];
+	int i;
+
+	StringToRGB_W(r_dischargelightcolor.string, color);
+
+	l.type = lt_custom;
+
+	for (i = 0; i < 3; i++)
+	{
+		l.color[i] = min(128, color[i]);
+	}
+
+	l.alpha = color[3];
+
+	dl = CL_AllocDlight(0);
+	VectorCopy(origin, dl->origin);
+	dl->radius = radius;
+	dl->die = cl.time + timeout;
+	dl->decay = timeout == 1 ? 300 : 0;
+	dl->type = lt_custom;
+	VectorCopy(l.color, dl->color);
+}

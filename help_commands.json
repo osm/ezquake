@@ -505,6 +505,9 @@
   "dir": {
     "system-generated": true
   },
+  "dischargeradius": {
+    "description": "Visualizes the discharge radius as a temporary sphere around the player. The color of the sphere is controlled by r_dischargeLightColor."
+  },
   "disconnect": {
     "description": "This command will disconnect you from the server/demo/proxy you are currently connected to."
   },

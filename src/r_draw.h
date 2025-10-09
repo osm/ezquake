@@ -15,5 +15,6 @@ void R_Draw_StringBase_StartString(float x, float y, float scale);
 void R_Cache2DMatrix(void);
 void R_UndoLastCharacter(void);
 void R_Draw_Polygon(float x, float y, vec3_t *vertices, int num_vertices, color_t color);
+void DrawRadius(int radius, int timeout, vec3_t origin);
 
 #endif // EZQUAKE_R_DRAW_HEADER

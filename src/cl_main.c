@@ -70,6 +70,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_renderer.h"
 #include "r_performance.h"
 #include "r_program.h"
+#include "r_draw.h"
 
 extern qbool ActiveApp, Minimized;
 
@@ -215,6 +216,8 @@ cvar_t r_rocketlight            = {"r_rocketLight", "1"};
 cvar_t r_rocketlightcolor       = {"r_rocketLightColor", "0"};
 cvar_t r_explosionlightcolor    = {"r_explosionLightColor", "0"};
 cvar_t r_explosionlight         = {"r_explosionLight", "1"};
+cvar_t r_dischargelight         = {"r_dischargeLight", "0"};
+cvar_t r_dischargelightcolor    = {"r_dischargeLightColor", "0 255 255"};
 cvar_t r_flagcolor              = {"r_flagColor", "0"};
 cvar_t r_lightflicker           = {"r_lightflicker", "1"};
 cvar_t r_powerupglow            = {"r_powerupGlow", "1"};
@@ -1394,6 +1397,28 @@ void CL_Disconnect_f (void)
 	Host_EndGame();
 }
 
+void CL_DischargeRadius_f (void)
+{
+	int cells, timeout;
+
+	if (Cmd_Argc() != 3)
+	{
+		Com_Printf("Usage: %s <cells> <timeout>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (cls.state == ca_active && !cl.standby)
+	{
+		Com_Printf("%s is not available during games\n", Cmd_Argv(0));
+		return;
+	}
+
+	cells = atoi(Cmd_Argv(1));
+	timeout = atoi(Cmd_Argv(2));
+
+	DrawRadius((cells * 35) + 40, timeout, cl.simorg);
+}
+
 // The server is changing levels.
 void CL_Reconnect_f (void) 
 {
@@ -1860,6 +1885,8 @@ static void CL_InitLocal(void)
 	Cvar_Register(&r_explosionlight);
 	Cvar_Register(&r_rocketlightcolor);
 	Cvar_Register(&r_explosionlightcolor);
+	Cvar_Register(&r_dischargelight);
+	Cvar_Register(&r_dischargelightcolor);
 	Cvar_Register(&r_flagcolor);
 	Cvar_Register(&cl_fakeshaft);
 	Cvar_Register(&cl_fakeshaft_extra_updates);
@@ -2017,6 +2044,7 @@ static void CL_InitLocal(void)
 	Cmd_AddCommand ("dns", CL_DNS_f);
 	Cmd_AddCommand ("hash", CL_Hash_f);
 	Cmd_AddCommand ("reconnect", CL_Reconnect_f);
+	Cmd_AddCommand ("dischargeradius", CL_DischargeRadius_f);
 
 	Cmd_AddMacro(macro_connectiontype, CL_Macro_ConnectionType);
 	Cmd_AddMacro(macro_demoplayback, CL_Macro_Demoplayback);

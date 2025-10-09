@@ -45,6 +45,7 @@ void MVDAnnouncer_PackDropped(const char* s);
 void MVDAnnouncer_Expired(const char* s);
 void MVDAnnouncer_BackpackPickup(const char* s);
 void CL_ReadKtxDamageIndicatorString(const char* s);
+void CL_ReadKtxDischargeString(const char* s);
 
 // Powerup cams
 qbool MVD_PowerupCam_Enabled(void);

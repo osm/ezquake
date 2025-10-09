@@ -16991,6 +16991,28 @@
         }
       ]
     },
+    "r_dischargeLight": {
+      "default": "0",
+      "desc": "When enabled, draws a sphere around the discharge to indicate its reach. This feature requires the server to emit the //ktx discharge event.",
+      "group-id": "8",
+      "type": "bool",
+      "values": [
+        {
+          "description": "Disable dynamic discharge light.",
+          "name": "0"
+        },
+        {
+          "description": "Enable dynamic discharge lights.",
+          "name": "1"
+        }
+      ]
+    },
+    "r_dischargeLightColor": {
+      "default": "0 255 255",
+      "desc": "Changes color of the discharge light sphere.",
+      "group-id": "8",
+      "type": "string"
+    },
     "r_sgbloodColor": {
       "default": "73",
       "desc": "Determines the color of the blood particles emitted when hitting entities with weapons other than the lightning gun.",

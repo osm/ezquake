@@ -48,6 +48,7 @@ $Id: cl_screen.c,v 1.156 2007-10-29 00:56:47 qqshka Exp $
 #include "r_renderer.h"
 #include "r_matrix.h"
 #include "qsound.h"
+#include "r_draw.h"
 
 #ifndef CLIENTONLY
 #include "server.h"
@@ -1363,6 +1364,26 @@ void CL_ReadKtxDamageIndicatorString(const char* s)
 
 		CL_SpawnDamageIndicatorDirect(deathtype, origin, damage, splash_damage, team_damage);
 	}
+}
+
+void CL_ReadKtxDischargeString(const char* s)
+{
+	vec3_t origin;
+	int radius;
+
+	Cmd_TokenizeString((char*)s);
+
+	if (Cmd_Argc() != 6)
+	{
+		return;
+	}
+
+	radius = atoi(Cmd_Argv(2));
+	origin[0] = atof(Cmd_Argv(3));
+	origin[1] = atof(Cmd_Argv(4));
+	origin[2] = atof(Cmd_Argv(5));
+
+	DrawRadius(radius, 1, origin);
 }
 
 static void SCR_RegisterDamageIndicatorCvars(void)
